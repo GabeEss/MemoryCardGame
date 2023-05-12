@@ -1,26 +1,44 @@
 import React, { useState } from "react";
 import CardPicker from "./Components/card-picker";
+import Gameover from "./Components/game-over";
+import Header from "./Components/header";
 
 const App = () => {
   const [round, setRound ] = useState(1);
   const [score, setScore] = useState(0);
+  const [outcome, setOutcome] = useState('');
 
-  return (
-    <div>
-      <div id="header">
-          <h1>Memory Card Game</h1>
-          <p>Get points by clicking on an image but don't click on any more than once!</p>
-          <div>Score: {score}</div>
-          <div>Round: {round}</div>
+  const handleRestart = () => {
+    setRound(1);
+    setScore(0);
+    setOutcome('');
+  }
+
+  if(outcome === '') {
+    return (
+      <div>
+      <Header
+      round={round}
+      score={score}
+      />
+      <CardPicker 
+      round={round}
+      setRound={setRound} 
+      score={score}
+      setScore={setScore}
+      outcome={outcome}
+      setOutcome={setOutcome}
+      />
       </div>
-    <CardPicker 
-    round={round}
-    setRound={setRound} 
-    score={score}
-    setScore={setScore} 
-    />
-    </div>
-  );
+    );
+  }
+  else {
+    return(
+      <Gameover 
+      outcome={outcome}
+      onRestart={handleRestart}
+      />
+    )
+  }
 }
-
 export default App;

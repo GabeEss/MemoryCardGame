@@ -6,26 +6,26 @@ import checkNextRound from "./Game-logic/check-next-round";
 import shuffleArray from "../Game-logic/shuffle-array";
 
 const CardPicker = (props) => {
-    const { round, setRound, score, setScore } = props;
+    const { round, setRound, score, setScore, outcome, setOutcome } = props;
     const [gameboard, setGameboard] = useState(createBoard(round));
     const [shouldShuffle, setShouldShuffle] = useState(false);
     const track = trackPicks();
   
     const handleChoice = (choice) => {
       if(makeChoice(choice, track)) {
-        // handleGameOver();
-        console.log("You lose.")
+        setOutcome('Loser');
       } else {
         setScore(score + 1);
         if(checkNextRound(round, track)) {
           if(round === 3) {
-            // handleWinGame();
-            console.log("You win.")
+            setOutcome('Winner');
           } else {
+            track.reset();
             handleNextRound();
           }
         }
-        setShouldShuffle(true);
+        // If the game has not ended and the round is not over, then shuffle.
+        if(outcome === '') setShouldShuffle(true);
       }
     };
 
@@ -36,19 +36,12 @@ const CardPicker = (props) => {
             setShouldShuffle(false);
         }
     }, [shouldShuffle, gameboard]);    
-  
+
     const handleNextRound = () => {
       setRound(round + 1);
       setGameboard(createBoard(round + 1));
+      setShouldShuffle(true);
     };
-
-    const handleGameOver = () => {
-  
-    }
-  
-    const handleWinGame = () => {
-  
-    }
   
     return (
         <div>

@@ -16,10 +16,15 @@ export default function trackPicks() {
         return picks.length;
     }
 
+    function reset() {
+        picks = new Set();
+    }
+
     return {
         picks,
         getSize,
         addPick,
-        checkPicks
+        checkPicks,
+        reset
     }
 }
