@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import CardPicker from "./Components/card-picker";
 
-function App() {
+const App = () => {
+  const [round, setRound ] = useState(1);
+  const [score, setScore] = useState(0);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div id="header">
+          <h1>Memory Card Game</h1>
+          <p>Get points by clicking on an image but don't click on any more than once!</p>
+          <div>Score: {score}</div>
+          <div>Round: {round}</div>
+      </div>
+    <CardPicker 
+    round={round}
+    setRound={setRound} 
+    score={score}
+    setScore={setScore} 
+    />
     </div>
   );
 }
