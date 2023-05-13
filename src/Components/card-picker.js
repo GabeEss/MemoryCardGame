@@ -1,22 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import createBoard from "../Game-logic/gameboard";
 import trackPicks from "../Game-logic/track-picks";
 import makeChoice from "../Game-logic/make-choice";
 import checkNextRound from "../Game-logic/check-next-round";
 import shuffleArray from "../Game-logic/shuffle-array";
+import getRandomSample from "../Game-logic/get-random-image";
 import callAPI from "../Public/call-api";
 import Loading from "./loading";
 import './card-picker.css';
-import { round1, round2, round3 } from "../Game-logic/round-length";
 
 const CardPicker = (props) => {
     const { round, setRound, score, setScore, outcome, setOutcome } = props;
     const [gameboard, setGameboard] = useState(createBoard(round));
-    const [shouldShuffle, setShouldShuffle] = useState(true);
+    const [shouldShuffle, setShouldShuffle] = useState(false);
     const [track] = useState(trackPicks());
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);
+    const firstCall = useRef(true);
 
+    // Fetch the images from the API at the first round.
+    useEffect(() => {
+        const fetchImages = async () => {
+            try {
+                let bool = false;
+                setLoading(true);
+                const response = await callAPI('starter deck: yugi');
+                const fetchedImages = await response.data.slice(0, response.data.length).map((card) => card.card_images[0].image_url_small);
+                // Shuffle the fetched images.
+                const shuffledImages = await fetchedImages.sort(() => Math.random() - 0.5);
+                const sample = [];
+
+                const randomSample = await getRandomSample(1, sample, shuffledImages);
+                
+                setImages(randomSample);
+                setLoading(false);
+
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        // This fixes the weird double call to the API on the first load.
+        if(firstCall.current) {
+            fetchImages();
+            firstCall.current = false;
+        }
+    }, [firstCall])
+    
     // Fetch the images from the API, when the round changes.
     useEffect(() => {
         const fetchImages = async () => {
@@ -26,49 +55,20 @@ const CardPicker = (props) => {
                 const fetchedImages = response.data.slice(0, response.data.length).map((card) => card.card_images[0].image_url_small);
                 // Shuffle the fetched images.
                 const shuffledImages = fetchedImages.sort(() => Math.random() - 0.5);
-
                 const randomSample = [];
 
-                if(round === 1) {
-                    while (randomSample.length < round1) {
-                        const randomIndex = Math.floor(Math.random() * shuffledImages.length);
-                        const randomImage = shuffledImages[randomIndex];
-                        if (!randomSample.includes(randomImage)) {
-                            randomSample.push(randomImage);
-                        }
-                    }
-                    setImages(randomSample);
-                    setLoading(false);
-                }
-                if(round === 2) {
-                    while (randomSample.length < round2) {
-                        const randomIndex = Math.floor(Math.random() * shuffledImages.length);
-                        const randomImage = shuffledImages[randomIndex];
-                        if (!randomSample.includes(randomImage)) {
-                            randomSample.push(randomImage);
-                        }
-                    }
-                    setImages(randomSample);
-                    setLoading(false);
-                }
-                if(round === 3) {
-                    while (randomSample.length < round3) {
-                        const randomIndex = Math.floor(Math.random() * shuffledImages.length);
-                        const randomImage = shuffledImages[randomIndex];
-                        if (!randomSample.includes(randomImage)) {
-                            randomSample.push(randomImage);
-                        }
-                    }
-                    setImages(randomSample);
-                    setLoading(false);
-                }
+                getRandomSample(round, randomSample, shuffledImages);
+                setImages(randomSample);
+                setLoading(false);
+                
             } catch (error) {
-                    console.log(error);
-                }
+                console.log(error);
+            }
         };
-        if(!images.length || round > 1)
+
+        if(round > 1)
             fetchImages();
-    }, [images.length, round])
+    }, [round])
   
     const handleChoice = (choice) => {
       if(makeChoice(choice, track)) {
@@ -112,7 +112,7 @@ const CardPicker = (props) => {
               {gameboard.map((card) => (
                 <div className="card" key={card.number} onClick={() => handleChoice(card.number)}>
                     {/* {card.number} */}
-                    <img src={images[card.number - 1]} alt={card.number} />
+                    <img src={images[card.number - 1]} alt={card.number}/>
                 </div>
               ))}
             </div>
