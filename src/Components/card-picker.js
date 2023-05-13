@@ -10,7 +10,7 @@ import Loading from "./loading";
 import './card-picker.css';
 
 const CardPicker = (props) => {
-    const { round, setRound, score, setScore, outcome, setOutcome } = props;
+    const { round, setRound, score, setScore, outcome, setOutcome, selectedOption } = props;
     const [gameboard, setGameboard] = useState(createBoard(round));
     const [shouldShuffle, setShouldShuffle] = useState(false);
     const [track] = useState(trackPicks());
@@ -22,9 +22,8 @@ const CardPicker = (props) => {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                let bool = false;
                 setLoading(true);
-                const response = await callAPI('starter deck: yugi');
+                const response = await callAPI(selectedOption);
                 const fetchedImages = await response.data.slice(0, response.data.length).map((card) => card.card_images[0].image_url_small);
                 // Shuffle the fetched images.
                 const shuffledImages = await fetchedImages.sort(() => Math.random() - 0.5);
@@ -44,14 +43,14 @@ const CardPicker = (props) => {
             fetchImages();
             firstCall.current = false;
         }
-    }, [firstCall])
+    }, [firstCall, selectedOption])
     
     // Fetch the images from the API, when the round changes.
     useEffect(() => {
         const fetchImages = async () => {
             try {
                 setLoading(true);
-                const response = await callAPI('starter deck: yugi');
+                const response = await callAPI(selectedOption);
                 const fetchedImages = response.data.slice(0, response.data.length).map((card) => card.card_images[0].image_url_small);
                 // Shuffle the fetched images.
                 const shuffledImages = fetchedImages.sort(() => Math.random() - 0.5);
@@ -68,7 +67,7 @@ const CardPicker = (props) => {
 
         if(round > 1)
             fetchImages();
-    }, [round])
+    }, [round, selectedOption])
   
     const handleChoice = (choice) => {
       if(makeChoice(choice, track)) {
@@ -101,6 +100,8 @@ const CardPicker = (props) => {
       setGameboard(createBoard(round + 1));
       setShouldShuffle(true);
     };
+
+    
   
     if(loading) {
         return (
@@ -109,12 +110,12 @@ const CardPicker = (props) => {
     } else {
         return (
             <div id="gameboard">
-              {gameboard.map((card) => (
+            {gameboard.map((card) => (
                 <div className="card" key={card.number} onClick={() => handleChoice(card.number)}>
                     {/* {card.number} */}
                     <img src={images[card.number - 1]} alt={card.number}/>
                 </div>
-              ))}
+            ))}
             </div>
         );
     }

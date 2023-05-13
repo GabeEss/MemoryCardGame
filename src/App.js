@@ -2,19 +2,51 @@ import React, { useState } from "react";
 import CardPicker from "./Components/card-picker";
 import Gameover from "./Components/game-over";
 import Header from "./Components/header";
+import DeckPicker from "./Components/deck-picker";
 
 const App = () => {
+  // Deck options
+  const options = [ 
+    { value: 'starter deck: yugi', label: 'Starter Deck: Yugi' },
+    { value: 'starter deck: kaiba', label: 'Starter Deck: Kaiba' },
+    { value: 'starter deck: joey', label: 'Starter Deck: Joey' },
+    { value: 'starter deck: pegasus', label: 'Starter Deck: Pegasus' }
+  ]
+
   const [round, setRound ] = useState(1);
   const [score, setScore] = useState(0);
   const [outcome, setOutcome] = useState('');
+  const [start, setStart] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(options[0].value); // deck options
 
   const handleRestart = () => {
     setRound(1);
     setScore(0);
     setOutcome('');
+    setStart(false);
   }
 
-  if(outcome === '') {
+  // When deck is chosen
+  const handleOptionSelect = (value) => {
+    setSelectedOption(value);
+  };
+
+  if(!start) {
+    return(
+      <div>
+        <Header
+        round={round}
+        score={score}
+        />
+        <DeckPicker
+        options={options}
+        selectedOption={selectedOption}
+        onOptionSelect={handleOptionSelect}
+        />
+        <button onClick={() => setStart(true)}>Play</button>
+      </div>
+    );
+  } else if(outcome === '') {
     return (
       <div>
       <Header
@@ -28,11 +60,11 @@ const App = () => {
       setScore={setScore}
       outcome={outcome}
       setOutcome={setOutcome}
+      selectedOption={selectedOption}
       />
       </div>
     );
-  }
-  else {
+  } else {
     return(
       <Gameover 
       outcome={outcome}
