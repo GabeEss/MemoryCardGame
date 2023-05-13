@@ -1,0 +1,8 @@
+#gameboard{
+    display: flex;
+    flex-direction: row;
+}
+.card {
+    width: 100px;
+    padding-top: 30px;
+}

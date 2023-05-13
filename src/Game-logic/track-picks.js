@@ -6,14 +6,11 @@ export default function trackPicks() {
     }
 
     function checkPicks(number) {
-        for(let i = 0; i < picks.length; i++) {
-            if(picks[i] === number) return true;
-        }
-        return false;
+        return picks.has(number);
     }
 
     function getSize() {
-        return picks.length;
+        return picks.size;
     }
 
     function reset() {
