@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.e351185a.css",
-    "main.js": "/static/js/main.9518f00c.js",
-    "static/media/pegasus-winner.png": "/static/media/pegasus-winner.01044ca6cd777d6a765f.png",
-    "static/media/yugi-loser.png": "/static/media/yugi-loser.db37815d8fbf37758ac2.png",
-    "static/media/yugi-winner.jpeg": "/static/media/yugi-winner.93c51d652f42167cc7d1.jpeg",
-    "static/media/kaiba-loser.jpeg": "/static/media/kaiba-loser.e198d461d4c6a4861ce5.jpeg",
-    "static/media/joey-winner.jpeg": "/static/media/joey-winner.7c91a0f0c7d001775bf8.jpeg",
-    "static/media/joey-loser.jpg": "/static/media/joey-loser.9022fbef373877c5e720.jpg",
-    "static/media/pegasus-loser.jpeg": "/static/media/pegasus-loser.5d76e30011d47927727e.jpeg",
-    "static/media/kaiba-winner.jpeg": "/static/media/kaiba-winner.8494fef33cf6565e7b72.jpeg",
-    "index.html": "/index.html",
-    "main.e351185a.css.map": "/static/css/main.e351185a.css.map",
-    "main.9518f00c.js.map": "/static/js/main.9518f00c.js.map"
+    "main.css": "/MemoryCardGame/static/css/main.e351185a.css",
+    "main.js": "/MemoryCardGame/static/js/main.a14be64a.js",
+    "static/media/pegasus-winner.png": "/MemoryCardGame/static/media/pegasus-winner.01044ca6cd777d6a765f.png",
+    "static/media/yugi-loser.png": "/MemoryCardGame/static/media/yugi-loser.db37815d8fbf37758ac2.png",
+    "static/media/yugi-winner.jpeg": "/MemoryCardGame/static/media/yugi-winner.93c51d652f42167cc7d1.jpeg",
+    "static/media/kaiba-loser.jpeg": "/MemoryCardGame/static/media/kaiba-loser.e198d461d4c6a4861ce5.jpeg",
+    "static/media/joey-winner.jpeg": "/MemoryCardGame/static/media/joey-winner.7c91a0f0c7d001775bf8.jpeg",
+    "static/media/joey-loser.jpg": "/MemoryCardGame/static/media/joey-loser.9022fbef373877c5e720.jpg",
+    "static/media/pegasus-loser.jpeg": "/MemoryCardGame/static/media/pegasus-loser.5d76e30011d47927727e.jpeg",
+    "static/media/kaiba-winner.jpeg": "/MemoryCardGame/static/media/kaiba-winner.8494fef33cf6565e7b72.jpeg",
+    "index.html": "/MemoryCardGame/index.html",
+    "main.e351185a.css.map": "/MemoryCardGame/static/css/main.e351185a.css.map",
+    "main.a14be64a.js.map": "/MemoryCardGame/static/js/main.a14be64a.js.map"
   },
   "entrypoints": [
     "static/css/main.e351185a.css",
-    "static/js/main.9518f00c.js"
+    "static/js/main.a14be64a.js"
   ]
 }
