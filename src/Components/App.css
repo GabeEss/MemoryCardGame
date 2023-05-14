@@ -1,0 +1,28 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: grid;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgb(26, 24, 24);
+    min-height: 100vh;
+    color: gold;
+}
+
+#header {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+/* 
+.start-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+} */
+
+.start{
+    margin-top: 10px;
+}

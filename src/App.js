@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './Components/App.css';
 import CardPicker from "./Components/card-picker";
 import Gameover from "./Components/game-over";
 import Header from "./Components/header";
@@ -33,7 +34,7 @@ const App = () => {
 
   if(!start) {
     return(
-      <div>
+      <div className="start-screen">
         <Header
         round={round}
         score={score}
@@ -43,7 +44,7 @@ const App = () => {
         selectedOption={selectedOption}
         onOptionSelect={handleOptionSelect}
         />
-        <button onClick={() => setStart(true)}>Play</button>
+        <button onClick={() => setStart(true)} className="start">Play</button>
       </div>
     );
   } else if(outcome === '') {
