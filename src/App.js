@@ -15,8 +15,8 @@ const App = () => {
 
   const [round, setRound ] = useState(1);
   const [score, setScore] = useState(0);
-  const [outcome, setOutcome] = useState('');
-  const [start, setStart] = useState(false);
+  const [outcome, setOutcome] = useState(''); // winner or loser
+  const [start, setStart] = useState(false); // start button state
   const [selectedOption, setSelectedOption] = useState(options[0].value); // deck options
 
   const handleRestart = () => {
@@ -69,6 +69,8 @@ const App = () => {
       <Gameover 
       outcome={outcome}
       onRestart={handleRestart}
+      options={options}
+      selectedOption={selectedOption}
       />
     )
   }
